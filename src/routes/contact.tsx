@@ -51,7 +51,7 @@ function ContactPage() {
         }
       >
         <p>
-          Tell us about your business and the services you need. Pricing is based on a custom
+          Share a little about your business and the services you need. Pricing is based on a custom
           quotation, and we're happy to discuss our free trial.
         </p>
       </PageHero>
