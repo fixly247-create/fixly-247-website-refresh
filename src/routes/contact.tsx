@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Info, Mail, Phone, Send } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
 import { WhatsAppIcon } from "@/components/site/BrandIcons";
 import { FxButton } from "@/components/site/FxButton";
 import { PageHero } from "@/components/site/PageHero";
@@ -231,7 +231,7 @@ function Field({
   label: string;
   required?: boolean;
   error?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <div>

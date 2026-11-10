@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as WhyChooseUsRouteImport } from './routes/why-choose-us'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExperienceRoute = ExperienceRouteImport.update({
@@ -44,6 +50,7 @@ const WhyChooseUsRoute = WhyChooseUsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/services': typeof ServicesRoute
   '/why-choose-us': typeof WhyChooseUsRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/services': typeof ServicesRoute
   '/why-choose-us': typeof WhyChooseUsRoute
@@ -59,22 +67,32 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/services': typeof ServicesRoute
   '/why-choose-us': typeof WhyChooseUsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/experience' | '/services' | '/why-choose-us'
+  fullPaths:
+    '/' | '/about' | '/contact' | '/experience' | '/services' | '/why-choose-us'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/experience' | '/services' | '/why-choose-us'
+  to:
+    '/' | '/about' | '/contact' | '/experience' | '/services' | '/why-choose-us'
   id:
-    '__root__' | '/' | '/about' | '/experience' | '/services' | '/why-choose-us'
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/experience'
+    | '/services'
+    | '/why-choose-us'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
   ExperienceRoute: typeof ExperienceRoute
   ServicesRoute: typeof ServicesRoute
   WhyChooseUsRoute: typeof WhyChooseUsRoute
@@ -94,6 +112,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/experience': {
@@ -123,6 +148,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
   ExperienceRoute: ExperienceRoute,
   ServicesRoute: ServicesRoute,
   WhyChooseUsRoute: WhyChooseUsRoute,
