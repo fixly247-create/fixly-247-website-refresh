@@ -22,7 +22,7 @@ export function Logo({
   onDark?: boolean;
   size?: "sm" | "md" | "lg";
 }) {
-  const h = size === "sm" ? "h-9" : size === "lg" ? "h-14" : "h-10 md:h-12";
+  const h = size === "sm" ? "h-9" : size === "lg" ? "h-14" : "h-11 md:h-14";
   const img = "block w-auto transition-opacity duration-500";
   return (
     <Link
