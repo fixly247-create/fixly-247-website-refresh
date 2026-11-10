@@ -63,7 +63,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-on-dark/10">
-        <div className="container-site flex flex-col gap-2 py-6 text-xs text-on-dark-muted sm:flex-row sm:items-center sm:justify-between">
+        <div className="container-site flex flex-col gap-2 pb-24 pt-6 text-xs sm:pb-6 sm:pr-24 text-on-dark-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Fixly 247. All rights reserved.</p>
           <p>Customer support &amp; business outsourcing.</p>
         </div>
