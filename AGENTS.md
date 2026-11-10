@@ -33,5 +33,7 @@ use the editor.
 - Site content (nav, services, experience, reasons, contact, social URLs) lives in `src/lib/site.ts`; pages read from it so details stay consistent everywhere.
 - Shared shell (header, footer, floating WhatsApp, page transition) lives in `src/routes/__root.tsx`; each page is its own route file with its own `head()`.
 - Reusable visual effects are CSS classes in `src/styles.css` (`btn-fx`, `btn-orb`, `card-fx`, `exp-card`, `social-btn`, `field`…); components compose them instead of ad-hoc styles.
-- The logo is rendered only through `src/components/site/Logo.tsx` (use `onDark` on dark backgrounds) so every placement uses the same asset.
+- The logo is rendered only through `src/components/site/Logo.tsx`; `onDark` swaps to the light-lettering file derived from the same original artwork, so no placement ever needs a plate behind it.
+- The header is fixed and reads the tone of the section beneath it: full-width navy sections carry `data-header-tone="dark"`, and opening navy bands also use `hero-offset` so they sit under the header. Mark any new navy section the same way.
+- Promotional CTAs are deliberately sparse: no closing CTA band on pages; the free-trial call appears only in the header/mobile menu, the home hero and the home trial section.
 - Enquiry email building/validation lives in `src/lib/enquiry.ts`, covered by `src/test/site-rules.test.ts`.

@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Building2, CheckCircle2 } from "lucide-react";
-import { CtaBand } from "@/components/site/CtaBand";
+import { CheckCircle2 } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { RevealGroup, RevealItem } from "@/components/site/Reveal";
 import { EXPERIENCES } from "@/lib/site";
@@ -46,33 +45,28 @@ function ExperiencePage() {
 
       <section className="section">
         <div className="container-site">
-          <RevealGroup className="grid gap-6 lg:grid-cols-2" stagger={0.1}>
+          <RevealGroup className="grid gap-6 lg:grid-cols-2" stagger={0.08}>
             {EXPERIENCES.map((x) => (
               <RevealItem key={x.company} className="h-full">
                 <article className="exp-card flex h-full flex-col p-7 md:p-9">
-                  <div className="flex items-start gap-4">
-                    <span className="icon-chip shrink-0">
-                      <Building2 />
-                    </span>
-                    <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="min-w-0">
                       <h2 className="text-xl font-bold leading-snug md:text-2xl">{x.company}</h2>
                       {x.detail && <p className="mt-1 font-semibold text-muted-foreground">{x.detail}</p>}
                     </div>
-                  </div>
-
-                  <div className="mt-6 flex flex-wrap items-center gap-2">
-                    <span className="text-base font-bold text-primary">{x.role}</span>
                     {x.current && (
-                      <span className="status-pill ml-auto">
+                      <span className="status-pill">
                         <span className="status-pill__dot" /> Currently Working
                       </span>
                     )}
                   </div>
 
+                  <p className="mt-5 text-base font-bold text-primary">{x.role}</p>
+
                   <ul className="mt-5 grid flex-1 gap-3 border-t border-border pt-5">
                     {x.points.map((p) => (
                       <li key={p} className="flex gap-3 text-muted-foreground">
-                        <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
+                        <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" strokeWidth={1.8} />
                         <span>{p}</span>
                       </li>
                     ))}
@@ -91,8 +85,6 @@ function ExperiencePage() {
           </RevealGroup>
         </div>
       </section>
-
-      <CtaBand title="Want this kind of support for your business?" />
     </>
   );
 }

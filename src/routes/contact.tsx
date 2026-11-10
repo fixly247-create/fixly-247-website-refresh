@@ -46,12 +46,12 @@ function ContactPage() {
         eyebrow="Contact Us"
         title={
           <>
-            Let's talk about <span className="display-accent">your support needs</span>
+            Tell us about <span className="display-accent">your support needs</span>
           </>
         }
       >
         <p>
-          Tell us about your business and the services you need. Pricing is based on a custom
+          Share a little about your business and the services you need. Pricing is based on a custom
           quotation, and we're happy to discuss our free trial.
         </p>
       </PageHero>
@@ -60,7 +60,6 @@ function ContactPage() {
         <div className="container-site grid gap-10 lg:grid-cols-[1fr_1.5fr]">
           <Reveal>
             <aside className="bg-navy on-dark rounded-[2rem] p-7 md:p-9">
-              <div className="orb orb--teal -right-16 -top-16 size-60" />
               <h2 className="text-2xl font-extrabold">Reach us directly</h2>
               <p className="mt-2 text-on-dark-muted">Call, message or email — whichever suits you.</p>
               <div className="mt-8 grid gap-3">

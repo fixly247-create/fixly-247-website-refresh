@@ -7,9 +7,33 @@ import { FxLink } from "./FxButton";
 import { Logo } from "./Logo";
 import { SocialLinks } from "./SocialLinks";
 
+/**
+ * "top"   – resting on the page's opening navy band: transparent, blends into it
+ * "dark"  – over a navy section further down: solid navy
+ * "light" – over a white / light section: clean white
+ */
+type Tone = "top" | "dark" | "light";
+
+/** Probe line just inside the header, where the section behind it is read. */
+const PROBE_Y = 40;
+
+function readTone(): Tone {
+  const dark = document.querySelectorAll<HTMLElement>("[data-header-tone='dark']");
+  let overDark = false;
+  for (const el of dark) {
+    const r = el.getBoundingClientRect();
+    if (r.top <= PROBE_Y && r.bottom > PROBE_Y) {
+      overDark = true;
+      break;
+    }
+  }
+  if (!overDark) return "light";
+  return window.scrollY < 12 ? "top" : "dark";
+}
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [tone, setTone] = useState<Tone>("top");
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -17,11 +41,25 @@ export function SiteHeader() {
   }, [pathname]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    let frame = 0;
+    const update = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => setTone(readTone()));
+    };
+    update();
+    // Re-read once the new page has painted after navigation.
+    const t1 = window.setTimeout(update, 60);
+    const t2 = window.setTimeout(update, 400);
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -30,10 +68,13 @@ export function SiteHeader() {
     };
   }, [open]);
 
+  const shownTone: Tone = open ? "light" : tone;
+  const onDark = shownTone !== "light";
+
   return (
-    <header className="site-header" data-scrolled={scrolled}>
+    <header className="site-header" data-tone={shownTone}>
       <div className="container-site flex h-20 items-center justify-between gap-6">
-        <Logo />
+        <Logo onDark={onDark} />
 
         <nav aria-label="Main" className="hidden items-center gap-7 lg:flex">
           {NAV_ITEMS.map((item) => (
@@ -71,29 +112,23 @@ export function SiteHeader() {
             id="mobile-menu"
             key="mobile-menu"
             className="absolute inset-x-0 top-full h-[calc(100dvh-5rem)] overflow-y-auto border-t border-border bg-background lg:hidden"
-            initial={{ opacity: 0, y: -12 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             <nav aria-label="Mobile" className="container-site flex flex-col gap-1 py-6">
-              {NAV_ITEMS.map((item, i) => (
-                <motion.div
+              {NAV_ITEMS.map((item) => (
+                <Link
                   key={item.to}
-                  initial={{ opacity: 0, x: -14 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.04 * i + 0.05, duration: 0.35 }}
+                  to={item.to}
+                  className="mobile-link"
+                  activeOptions={{ exact: item.to === "/" }}
+                  onClick={() => setOpen(false)}
                 >
-                  <Link
-                    to={item.to}
-                    className="mobile-link"
-                    activeOptions={{ exact: item.to === "/" }}
-                    onClick={() => setOpen(false)}
-                  >
-                    {item.label}
-                    <ArrowRight className="size-4 text-primary" />
-                  </Link>
-                </motion.div>
+                  {item.label}
+                  <ArrowRight className="size-4 text-primary" />
+                </Link>
               ))}
               <div className="mt-6 flex flex-col gap-6">
                 <FxLink to="/contact" variant="teal" block>

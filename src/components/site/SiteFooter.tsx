@@ -7,11 +7,10 @@ import { SocialLinks } from "./SocialLinks";
 
 export function SiteFooter() {
   return (
-    <footer className="bg-navy on-dark">
-      <div className="orb orb--teal -right-24 -top-24 size-80" />
+    <footer className="bg-navy on-dark" data-header-tone="dark">
       <div className="container-site grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr] lg:py-20">
         <div className="max-w-sm">
-          <Logo onDark size="md" />
+          <Logo onDark size="lg" />
           <p className="mt-6 text-sm leading-relaxed text-on-dark-muted">
             Fixly 247 is a professional customer support and business outsourcing service
             provider, helping businesses worldwide deliver excellent customer experiences.

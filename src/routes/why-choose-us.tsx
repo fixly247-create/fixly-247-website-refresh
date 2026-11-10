@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { CtaBand } from "@/components/site/CtaBand";
 import { PageHero } from "@/components/site/PageHero";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/Reveal";
-import { SectionHeading } from "@/components/site/SectionHeading";
-import { REASONS, STEPS } from "@/lib/site";
+import { REASONS } from "@/lib/site";
 
 export const Route = createFileRoute("/why-choose-us")({
   head: () => ({
@@ -41,25 +39,21 @@ function WhyChooseUsPage() {
 
       <section className="section">
         <div className="container-site">
-          <RevealGroup className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <RevealGroup className="grid gap-x-16 md:grid-cols-2">
             {REASONS.map((r) => (
-              <RevealItem key={r.title} className="h-full">
-                <article className="card-fx h-full p-8">
-                  <span className="icon-chip">
-                    <r.icon />
-                  </span>
-                  <h2 className="mt-6 text-xl font-bold">{r.title}</h2>
-                  <p className="mt-3 leading-relaxed text-muted-foreground">{r.description}</p>
-                </article>
+              <RevealItem key={r.title} className="rule-item flex gap-5">
+                <r.icon className="mt-1 size-6 shrink-0 text-primary" strokeWidth={1.6} />
+                <div>
+                  <h2 className="text-xl font-bold">{r.title}</h2>
+                  <p className="mt-2 leading-relaxed text-muted-foreground">{r.description}</p>
+                </div>
               </RevealItem>
             ))}
           </RevealGroup>
         </div>
       </section>
 
-      <section className="section bg-navy on-dark">
-        <div className="orb orb--teal -right-24 -top-10 size-96" />
-        <div className="orb orb--glow -bottom-24 -left-24 size-80" />
+      <section className="section bg-tint">
         <div className="container-site">
           <Reveal className="mx-auto max-w-4xl">
             <p className="eyebrow">Our commitment</p>
@@ -67,7 +61,7 @@ function WhyChooseUsPage() {
               We treat your customers like our own because{" "}
               <span className="display-accent">your success is our success.</span>
             </h2>
-            <div className="mt-10 grid gap-6 text-lg leading-relaxed text-on-dark-muted md:grid-cols-2">
+            <div className="mt-10 grid gap-6 text-lg leading-relaxed text-muted-foreground md:grid-cols-2">
               <p>
                 At Fixly 247, we believe every customer interaction matters. We treat your customers
                 with the same care, respect, dedication, and professionalism that we would give our
@@ -79,29 +73,10 @@ function WhyChooseUsPage() {
                 to our success.
               </p>
             </div>
-            <p className="mt-10 font-display text-2xl italic text-teal-glow">— The Fixly 247 Team</p>
+            <p className="mt-10 font-display text-2xl italic text-primary">— The Fixly 247 Team</p>
           </Reveal>
         </div>
       </section>
-
-      <section className="section">
-        <div className="container-site">
-          <SectionHeading eyebrow="How it works" title="Professional Support in Three Simple Steps" center />
-          <RevealGroup className="relative mt-16 grid gap-10 md:grid-cols-3" stagger={0.12}>
-            {STEPS.map((step, i) => (
-              <RevealItem key={step.title}>
-                <div className="text-center">
-                  <span className="step-num mx-auto">{i + 1}</span>
-                  <h3 className="mt-6 text-xl font-bold">{step.title}</h3>
-                  <p className="mt-3 text-muted-foreground">{step.description}</p>
-                </div>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </div>
-      </section>
-
-      <CtaBand />
     </>
   );
 }
