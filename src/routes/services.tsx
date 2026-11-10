@@ -1,7 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Check, FileText } from "lucide-react";
-import { CtaBand } from "@/components/site/CtaBand";
-import { FxLink } from "@/components/site/FxButton";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowUpRight, Check } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/Reveal";
 import { SERVICES } from "@/lib/site";
@@ -44,21 +42,21 @@ function ServicesPage() {
 
       <section className="section">
         <div className="container-site">
-          <RevealGroup className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <RevealGroup className="border-t border-border" stagger={0.06}>
             {SERVICES.map((s) => (
-              <RevealItem key={s.title} className="h-full">
-                <article className="card-fx flex h-full flex-col p-8">
-                  <span className="icon-chip">
-                    <s.icon />
-                  </span>
-                  <h2 className="mt-6 text-xl font-bold">{s.title}</h2>
-                  <p className="mt-3 leading-relaxed text-muted-foreground">{s.description}</p>
-                  <ul className="mt-6 grid gap-2.5 border-t border-border pt-6">
+              <RevealItem key={s.title}>
+                <article className="service-row">
+                  <div className="flex items-center gap-4">
+                    <span className="icon-chip shrink-0">
+                      <s.icon />
+                    </span>
+                    <h2 className="text-xl font-bold md:text-2xl">{s.title}</h2>
+                  </div>
+                  <p className="leading-relaxed text-muted-foreground">{s.description}</p>
+                  <ul className="grid gap-2">
                     {s.points.map((p) => (
-                      <li key={p} className="flex items-center gap-3 text-sm font-semibold">
-                        <span className="grid size-5 place-items-center rounded-full bg-accent text-primary">
-                          <Check className="size-3" />
-                        </span>
+                      <li key={p} className="flex items-center gap-2.5 text-sm font-semibold">
+                        <Check className="size-4 shrink-0 text-primary" />
                         {p}
                       </li>
                     ))}
@@ -66,35 +64,22 @@ function ServicesPage() {
                 </article>
               </RevealItem>
             ))}
-            <RevealItem className="h-full">
-              <div className="bg-navy on-dark flex h-full flex-col justify-between rounded-[1.5rem] p-8">
-                <div>
-                  <span className="grid size-13 place-items-center rounded-2xl bg-teal/25 text-teal-glow">
-                    <FileText className="size-6" />
-                  </span>
-                  <h2 className="mt-6 text-xl font-bold">Custom quotation</h2>
-                  <p className="mt-3 leading-relaxed text-on-dark-muted">
-                    Pricing is based on a custom quotation according to your services and support
-                    requirements.
-                  </p>
-                </div>
-                <div className="mt-8">
-                  <FxLink to="/contact" variant="teal" size="sm">
-                    Request a Quote
-                  </FxLink>
-                </div>
-              </div>
-            </RevealItem>
           </RevealGroup>
-          <Reveal className="mt-14 text-center">
-            <FxLink to="/contact" variant="navy">
-              Get a Free Trial
-            </FxLink>
+
+          <Reveal className="mt-16 grid gap-6 rounded-[var(--radius-2xl)] bg-muted p-8 md:grid-cols-[1.6fr_1fr] md:items-center md:p-12">
+            <div>
+              <h2 className="text-2xl font-extrabold md:text-3xl">Custom quotation</h2>
+              <p className="mt-3 max-w-xl leading-relaxed text-muted-foreground">
+                Pricing is based on a custom quotation according to your services and support
+                requirements.
+              </p>
+            </div>
+            <Link to="/contact" className="text-link md:justify-self-end">
+              Request a quote <ArrowUpRight className="size-4" />
+            </Link>
           </Reveal>
         </div>
       </section>
-
-      <CtaBand />
     </>
   );
 }
