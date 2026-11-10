@@ -10,7 +10,7 @@ export type Enquiry = {
   message: string;
 };
 
-export type EnquiryErrors = Partial<Record<keyof Enquiry, string>>;
+export type EnquiryErrors = Partial<Record<keyof Enquiry, string | undefined>>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
