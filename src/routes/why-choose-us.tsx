@@ -53,7 +53,7 @@ function WhyChooseUsPage() {
         </div>
       </section>
 
-      <section className="section bg-navy on-dark" data-header-tone="dark">
+      <section className="section bg-tint">
         <div className="container-site">
           <Reveal className="mx-auto max-w-4xl">
             <p className="eyebrow">Our commitment</p>
@@ -61,7 +61,7 @@ function WhyChooseUsPage() {
               We treat your customers like our own because{" "}
               <span className="display-accent">your success is our success.</span>
             </h2>
-            <div className="mt-10 grid gap-6 text-lg leading-relaxed text-on-dark-muted md:grid-cols-2">
+            <div className="mt-10 grid gap-6 text-lg leading-relaxed text-muted-foreground md:grid-cols-2">
               <p>
                 At Fixly 247, we believe every customer interaction matters. We treat your customers
                 with the same care, respect, dedication, and professionalism that we would give our
@@ -73,11 +73,10 @@ function WhyChooseUsPage() {
                 to our success.
               </p>
             </div>
-            <p className="mt-10 font-display text-2xl italic text-teal-glow">— The Fixly 247 Team</p>
+            <p className="mt-10 font-display text-2xl italic text-primary">— The Fixly 247 Team</p>
           </Reveal>
         </div>
       </section>
-
     </>
   );
 }
