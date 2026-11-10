@@ -132,17 +132,14 @@
 
   --gradient-teal: linear-gradient(135deg, var(--teal) 0%, var(--teal-glow) 100%);
   --gradient-navy: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 55%, var(--navy-soft) 100%);
-  --gradient-hero:
-    radial-gradient(60% 70% at 85% 10%, color-mix(in oklab, var(--teal) 38%, transparent) 0%, transparent 70%),
-    radial-gradient(50% 60% at 0% 100%, color-mix(in oklab, var(--teal-glow) 18%, transparent) 0%, transparent 70%),
-    linear-gradient(170deg, var(--navy-deep) 0%, var(--navy) 100%);
+  /* Opening bands are a flat deep navy so the transparent header blends straight into them */
+  --gradient-hero: var(--navy-deep);
   --gradient-tint: linear-gradient(180deg, var(--background) 0%, var(--muted) 100%);
   --gradient-ig: linear-gradient(45deg, var(--ig-1) 0%, var(--ig-2) 25%, var(--ig-3) 50%, var(--ig-4) 75%, var(--ig-5) 100%);
 
   --shadow-soft: 0 10px 30px -14px color-mix(in oklab, var(--navy) 35%, transparent);
   --shadow-lift: 0 26px 50px -22px color-mix(in oklab, var(--navy) 45%, transparent);
-  --shadow-glow: 0 0 0 1px color-mix(in oklab, var(--teal) 30%, transparent),
-    0 18px 40px -16px color-mix(in oklab, var(--teal) 60%, transparent);
+  --shadow-glow: 0 12px 28px -14px color-mix(in oklab, var(--navy) 55%, transparent);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -176,6 +173,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
   }
 
   body {
@@ -244,7 +242,7 @@
     width: 1.75rem;
     height: 2px;
     border-radius: 2px;
-    background: var(--gradient-teal);
+    background: currentColor;
   }
   .on-dark .eyebrow {
     color: var(--teal-glow);
@@ -255,11 +253,11 @@
     font-style: italic;
     font-weight: 400;
     letter-spacing: -0.01em;
-    background: var(--gradient-teal);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--primary);
     padding-right: 0.08em;
+  }
+  .on-dark .display-accent {
+    color: var(--teal-glow);
   }
 
   /* Section backgrounds */
@@ -270,19 +268,8 @@
     isolation: isolate;
     overflow: hidden;
   }
-  .bg-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background-image:
-      linear-gradient(color-mix(in oklab, var(--on-dark) 6%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in oklab, var(--on-dark) 6%, transparent) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(70% 70% at 60% 30%, black 0%, transparent 80%);
-  }
   .bg-navy {
-    background: var(--gradient-navy);
+    background: var(--navy);
     color: var(--on-dark);
     position: relative;
     isolation: isolate;
@@ -291,53 +278,50 @@
   .bg-tint {
     background: var(--gradient-tint);
   }
-  .bg-dots {
-    background-image: radial-gradient(color-mix(in oklab, var(--teal) 22%, transparent) 1px, transparent 1px);
-    background-size: 22px 22px;
-  }
-
-  /* Floating decorative orbs */
-  .orb {
-    position: absolute;
-    border-radius: 9999px;
-    filter: blur(60px);
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0.55;
-    animation: float-y 12s ease-in-out infinite;
-  }
-  .orb--teal {
-    background: color-mix(in oklab, var(--teal) 70%, transparent);
-  }
-  .orb--glow {
-    background: color-mix(in oklab, var(--teal-glow) 55%, transparent);
-    animation-duration: 16s;
-    animation-delay: -4s;
-  }
-  .ring-deco {
-    position: absolute;
-    border-radius: 9999px;
-    border: 1px dashed color-mix(in oklab, var(--teal-glow) 40%, transparent);
-    pointer-events: none;
-    animation: spin-slow 60s linear infinite;
+  /* Opening bands start under the fixed header */
+  .hero-offset {
+    padding-top: 5rem;
   }
 
   /* ---------------------------------------------------------------- */
   /* Navigation                                                        */
   /* ---------------------------------------------------------------- */
+  /*
+   * Fixed header that takes on the tone of the section behind it (see SiteHeader):
+   * top = transparent over the opening navy band, dark = navy, light = white.
+   */
   .site-header {
-    position: sticky;
+    --hdr-fg: var(--muted-foreground);
+    --hdr-fg-active: var(--foreground);
+    position: fixed;
+    inset-inline: 0;
     top: 0;
     z-index: 50;
-    background: color-mix(in oklab, var(--background) 82%, transparent);
-    backdrop-filter: blur(16px) saturate(1.4);
-    -webkit-backdrop-filter: blur(16px) saturate(1.4);
-    border-bottom: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
-    transition: box-shadow 0.4s var(--ease-out), background 0.4s var(--ease-out);
+    background-color: color-mix(in oklab, var(--card) 94%, transparent);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 6px 24px -18px color-mix(in oklab, var(--navy) 60%, transparent);
+    backdrop-filter: blur(14px) saturate(1.3);
+    -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    transition:
+      background-color 0.45s var(--ease-out),
+      border-color 0.45s var(--ease-out),
+      box-shadow 0.45s var(--ease-out);
   }
-  .site-header[data-scrolled="true"] {
-    box-shadow: var(--shadow-soft);
-    background: color-mix(in oklab, var(--background) 94%, transparent);
+  .site-header[data-tone="top"] {
+    --hdr-fg: var(--on-dark-muted);
+    --hdr-fg-active: var(--on-dark);
+    background-color: transparent;
+    border-bottom-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .site-header[data-tone="dark"] {
+    --hdr-fg: var(--on-dark-muted);
+    --hdr-fg-active: var(--on-dark);
+    background-color: color-mix(in oklab, var(--navy-deep) 92%, transparent);
+    border-bottom-color: color-mix(in oklab, var(--on-dark) 10%, transparent);
+    box-shadow: none;
   }
 
   .nav-link {
@@ -345,7 +329,7 @@
     padding: 0.5rem 0.15rem;
     font-size: 0.92rem;
     font-weight: 600;
-    color: var(--muted-foreground);
+    color: var(--hdr-fg);
     transition: color 0.3s var(--ease-out);
   }
   .nav-link::after {
@@ -356,14 +340,14 @@
     bottom: 0.1rem;
     height: 2px;
     border-radius: 2px;
-    background: var(--gradient-teal);
+    background: var(--teal);
     transform: scaleX(0);
     transform-origin: right;
-    transition: transform 0.45s var(--ease-out);
+    transition: transform 0.4s var(--ease-out);
   }
   .nav-link:hover,
   .nav-link[data-status="active"] {
-    color: var(--foreground);
+    color: var(--hdr-fg-active);
   }
   .nav-link:hover::after,
   .nav-link[data-status="active"]::after {
@@ -380,11 +364,15 @@
     border: 1px solid var(--border);
     background: var(--card);
     color: var(--foreground);
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s, transform 0.2s;
   }
   .menu-toggle:hover {
     border-color: var(--teal);
-    box-shadow: var(--shadow-glow);
+  }
+  .site-header:not([data-tone="light"]) .menu-toggle {
+    background: transparent;
+    color: var(--on-dark);
+    border-color: color-mix(in oklab, var(--on-dark) 25%, transparent);
   }
   .menu-toggle:active {
     transform: scale(0.94);
@@ -415,7 +403,7 @@
   .btn-fx {
     --btn-bg: var(--secondary);
     --btn-fg: var(--secondary-foreground);
-    --btn-chip: var(--gradient-teal);
+    --btn-chip: var(--teal-glow);
     --btn-chip-fg: var(--navy-deep);
     --btn-hover-fg: var(--navy-deep);
     position: relative;
@@ -500,12 +488,11 @@
   }
 
   .btn-fx--teal {
-    --btn-bg: var(--gradient-teal);
+    --btn-bg: var(--teal-glow);
     --btn-fg: var(--navy-deep);
     --btn-chip: var(--navy-deep);
     --btn-chip-fg: var(--on-dark);
     --btn-hover-fg: var(--on-dark);
-    background: var(--gradient-teal);
   }
   .btn-fx--light {
     --btn-bg: var(--card);
@@ -529,7 +516,6 @@
     --btn-chip-fg: var(--navy);
     --btn-hover-fg: var(--navy);
     box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--on-dark) 22%, transparent);
-    backdrop-filter: blur(8px);
   }
   .btn-fx--sm {
     min-height: 2.75rem;
@@ -642,78 +628,117 @@
   /* ---------------------------------------------------------------- */
   .card-fx {
     position: relative;
-    isolation: isolate;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 1.5rem;
-    box-shadow: 0 1px 0 color-mix(in oklab, var(--navy) 4%, transparent);
-    transition:
-      transform 0.5s var(--ease-out),
-      box-shadow 0.5s var(--ease-out),
-      border-color 0.5s var(--ease-out);
-    overflow: hidden;
-  }
-  .card-fx::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: radial-gradient(
-      80% 60% at 100% 0%,
-      color-mix(in oklab, var(--teal-glow) 22%, transparent),
-      transparent 70%
-    );
-    opacity: 0;
-    transition: opacity 0.5s var(--ease-out);
-  }
-  .card-fx:hover {
-    transform: translateY(-6px);
-    border-color: color-mix(in oklab, var(--teal) 45%, transparent);
-    box-shadow: var(--shadow-lift);
-  }
-  .card-fx:hover::after {
-    opacity: 1;
+    box-shadow: 0 1px 2px color-mix(in oklab, var(--navy) 5%, transparent);
   }
 
   .icon-chip {
     display: grid;
     place-items: center;
-    width: 3.25rem;
-    height: 3.25rem;
-    border-radius: 1rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.85rem;
     background: var(--accent);
     color: var(--primary);
-    border: 1px solid color-mix(in oklab, var(--teal) 25%, transparent);
-    transition:
-      background 0.5s var(--ease-out),
-      color 0.5s var(--ease-out),
-      transform 0.5s var(--ease-out);
   }
   .icon-chip svg {
-    width: 1.45rem;
-    height: 1.45rem;
-  }
-  .card-fx:hover .icon-chip {
-    background: var(--gradient-teal);
-    color: var(--navy-deep);
-    transform: rotate(-6deg) scale(1.06);
+    width: 1.35rem;
+    height: 1.35rem;
+    stroke-width: 1.7;
   }
 
-  .card-dark {
+  /* Simple editorial list item: a hairline on top instead of a card */
+  .rule-item {
+    border-top: 1px solid var(--border);
+    padding-block: 1.75rem 2rem;
+  }
+
+  /* Steps on navy */
+  .step-item {
+    border-top: 1px solid color-mix(in oklab, var(--on-dark) 18%, transparent);
+    padding-top: 1.5rem;
+  }
+  .step-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-glow);
+  }
+
+  /* Hero list of channels */
+  .hero-list {
+    border-top: 1px solid color-mix(in oklab, var(--on-dark) 16%, transparent);
+  }
+  .hero-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1.1rem;
+    border-bottom: 1px solid color-mix(in oklab, var(--on-dark) 16%, transparent);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--on-dark);
+  }
+  .hero-list li::after {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: var(--teal-glow);
+  }
+
+  /* Services page rows */
+  .service-row {
+    display: grid;
+    gap: 1rem;
+    padding-block: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  @media (min-width: 768px) {
+    .service-row {
+      grid-template-columns: 1.1fr 1.4fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+      padding-block: 2.5rem;
+    }
+  }
+
+  /* Plain text link with arrow */
+  .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+    color: var(--foreground);
+    border-bottom: 2px solid var(--teal);
+    padding-bottom: 0.2rem;
+    transition: color 0.3s var(--ease-out), gap 0.3s var(--ease-out);
+  }
+  .text-link:hover {
+    color: var(--primary);
+    gap: 0.6rem;
+  }
+
+  /* About page portrait */
+  .portrait {
     position: relative;
     border-radius: 1.5rem;
-    background: color-mix(in oklab, var(--on-dark) 5%, transparent);
-    border: 1px solid color-mix(in oklab, var(--on-dark) 12%, transparent);
-    backdrop-filter: blur(10px);
-    transition:
-      transform 0.5s var(--ease-out),
-      border-color 0.5s var(--ease-out),
-      background 0.5s var(--ease-out);
+    overflow: hidden;
+    border: 6px solid var(--card);
+    outline: 1px solid var(--border);
+    box-shadow: 0 30px 60px -30px color-mix(in oklab, var(--navy) 55%, transparent);
   }
-  .card-dark:hover {
-    transform: translateY(-5px);
-    border-color: color-mix(in oklab, var(--teal-glow) 50%, transparent);
-    background: color-mix(in oklab, var(--on-dark) 8%, transparent);
+  .portrait::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background: var(--teal);
   }
 
   /* Experience cards */
@@ -734,16 +759,15 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: 4px;
-    background: var(--gradient-teal);
-    transform: scaleY(0.25);
+    width: 3px;
+    background: var(--teal);
+    transform: scaleY(0.2);
     transform-origin: top;
     transition: transform 0.6s var(--ease-out);
   }
   .exp-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lift);
-    border-color: color-mix(in oklab, var(--teal) 40%, transparent);
+    box-shadow: var(--shadow-soft);
+    border-color: color-mix(in oklab, var(--teal) 35%, var(--border));
   }
   .exp-card:hover::before {
     transform: scaleY(1);
@@ -775,60 +799,6 @@
     font-weight: 700;
     background: var(--muted);
     color: var(--muted-foreground);
-  }
-
-  /* Image frames */
-  .frame-photo {
-    position: relative;
-    border-radius: 2rem;
-    padding: 0.6rem;
-    background:
-      linear-gradient(var(--card), var(--card)) padding-box,
-      var(--gradient-teal) border-box;
-    border: 1.5px solid transparent;
-    box-shadow: var(--shadow-lift);
-  }
-  .frame-photo__inner {
-    overflow: hidden;
-    border-radius: 1.5rem;
-  }
-  .frame-photo__inner img {
-    transition: transform 1.2s var(--ease-out);
-  }
-  .frame-photo:hover .frame-photo__inner img {
-    transform: scale(1.05);
-  }
-  .frame-photo__offset {
-    position: absolute;
-    inset: 1.5rem -1.25rem -1.25rem 1.5rem;
-    border-radius: 2rem;
-    z-index: -1;
-    background: var(--gradient-navy);
-  }
-
-  .float-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
-    border-radius: 1rem;
-    background: color-mix(in oklab, var(--card) 92%, transparent);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-lift);
-    color: var(--foreground);
-    animation: float-y 6s ease-in-out infinite;
-  }
-
-  /* Hero channel cards */
-  .channel-card {
-    border-radius: 1.25rem;
-    padding: 1rem 1.1rem;
-    background: color-mix(in oklab, var(--on-dark) 7%, transparent);
-    border: 1px solid color-mix(in oklab, var(--on-dark) 14%, transparent);
-    backdrop-filter: blur(14px);
-    color: var(--on-dark);
-    box-shadow: 0 24px 50px -24px color-mix(in oklab, var(--navy-deep) 90%, transparent);
   }
 
   /* ---------------------------------------------------------------- */
@@ -926,18 +896,6 @@
   }
 
   /* ---------------------------------------------------------------- */
-  /* Logo                                                              */
-  /* ---------------------------------------------------------------- */
-  /* On dark backgrounds the navy logo sits on a soft light plate so it stays legible */
-  .logo-plate {
-    display: inline-flex;
-    padding: 0.7rem 1rem;
-    border-radius: 1rem;
-    background: color-mix(in oklab, var(--card) 96%, transparent);
-    box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--navy-deep) 80%, transparent);
-  }
-
-  /* ---------------------------------------------------------------- */
   /* Social icons                                                      */
   /* ---------------------------------------------------------------- */
   .social-btn {
@@ -1001,7 +959,6 @@
     background: var(--whatsapp);
     color: var(--primary-foreground);
     box-shadow: 0 14px 30px -10px color-mix(in oklab, var(--whatsapp-dark) 80%, transparent);
-    animation: float-y 4s ease-in-out infinite;
     transition: box-shadow 0.4s var(--ease-out), background 0.4s;
   }
   @media (min-width: 768px) {
@@ -1022,14 +979,12 @@
     inset: 0;
     border-radius: inherit;
     border: 2px solid var(--whatsapp);
-    animation: pulse-ring 2.6s var(--ease-out) infinite;
+    animation: pulse-ring 3.5s var(--ease-out) infinite;
   }
   .wa-float:hover,
   .wa-float:focus-visible {
     background: var(--whatsapp-dark);
-    box-shadow:
-      0 0 0 6px color-mix(in oklab, var(--whatsapp) 22%, transparent),
-      0 0 40px 4px color-mix(in oklab, var(--teal-glow) 55%, transparent);
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--whatsapp) 22%, transparent);
   }
   .wa-float__tip {
     position: absolute;
@@ -1053,47 +1008,11 @@
     transform: translate(0, -50%);
   }
 
-  /* Steps */
-  .step-num {
-    display: grid;
-    place-items: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 9999px;
-    font-weight: 800;
-    background: var(--gradient-teal);
-    color: var(--navy-deep);
-    box-shadow: var(--shadow-glow);
-  }
-
-  .quote-mark {
-    font-family: var(--font-display);
-    font-size: 8rem;
-    line-height: 1;
-    background: var(--gradient-teal);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
 }
 
 /* ------------------------------------------------------------------ */
 /* Keyframes                                                           */
 /* ------------------------------------------------------------------ */
-@keyframes float-y {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-@keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
 @keyframes pulse-ring {
   0% {
     transform: scale(1);
