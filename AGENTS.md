@@ -28,3 +28,10 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Site content (nav, services, experience, reasons, contact, social URLs) lives in `src/lib/site.ts`; pages read from it so details stay consistent everywhere.
+- Shared shell (header, footer, floating WhatsApp, page transition) lives in `src/routes/__root.tsx`; each page is its own route file with its own `head()`.
+- Reusable visual effects are CSS classes in `src/styles.css` (`btn-fx`, `btn-orb`, `card-fx`, `exp-card`, `social-btn`, `field`…); components compose them instead of ad-hoc styles.
+- The logo is rendered only through `src/components/site/Logo.tsx` (use `onDark` on dark backgrounds) so every placement uses the same asset.
+- Enquiry email building/validation lives in `src/lib/enquiry.ts`, covered by `src/test/site-rules.test.ts`.
