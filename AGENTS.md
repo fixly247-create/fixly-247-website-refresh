@@ -30,7 +30,7 @@ use the editor.
 <!-- LOVABLE:END -->
 
 ## Project rules
-- Site content (nav, services, reasons, contact, social URLs) lives in `src/lib/site.ts`; pages read from it so details stay consistent everywhere.
+- Site content (nav, services, reasons, client logos, contact, social URLs) lives in `src/lib/site.ts`; pages read from it so details stay consistent everywhere.
 - Shared shell (header, footer, floating WhatsApp, page transition) lives in `src/routes/__root.tsx`; each page is its own route file with its own `head()`.
 - Reusable visual effects are CSS classes in `src/styles.css` (`btn-fx`, `btn-orb`, `card-fx`, `exp-card`, `social-btn`, `field`…); components compose them instead of ad-hoc styles.
 - The logo is rendered only through `src/components/site/Logo.tsx`; `onDark` swaps to the light-lettering file derived from the same original artwork, so no placement ever needs a plate behind it.

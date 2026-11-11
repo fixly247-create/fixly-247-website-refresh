@@ -5,7 +5,7 @@ import illustrationAsset from "@/assets/customer-service-illustration.jpg.asset.
 import { FxLink } from "@/components/site/FxButton";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/SectionHeading";
-import { SERVICES, STEPS } from "@/lib/site";
+import { CLIENTS, SERVICES, STEPS } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -38,6 +38,7 @@ function HomePage() {
       <Intro />
       <ServicesPreview />
       <HowItWorks />
+      <OurClients />
       <FreeTrial />
     </>
   );
@@ -164,6 +165,43 @@ function HowItWorks() {
           ))}
         </RevealGroup>
       </div>
+    </section>
+  );
+}
+
+function OurClients() {
+  // Two identical runs let the strip loop seamlessly; the copy is hidden from screen readers.
+  const runs = [0, 1];
+  return (
+    <section className="section bg-card" aria-labelledby="our-clients">
+      <div className="container-site">
+        <Reveal>
+          <h2 id="our-clients" className="text-center text-3xl font-extrabold leading-tight md:text-5xl">
+            Our Clients
+          </h2>
+        </Reveal>
+      </div>
+      <Reveal delay={0.1} className="logo-marquee mt-12 md:mt-16">
+        <div className="logo-marquee__track">
+          {runs.map((run) => (
+            <ul key={run} className="logo-marquee__run" aria-hidden={run === 1 || undefined}>
+              {CLIENTS.map((c) => (
+                <li key={c.name} className="logo-marquee__item">
+                  <img
+                    src={c.src}
+                    alt={run === 0 ? c.name : ""}
+                    width={c.width}
+                    height={c.height}
+                    loading="lazy"
+                    decoding="async"
+                    className={`client-logo client-logo--${c.shape}`}
+                  />
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </Reveal>
     </section>
   );
 }
