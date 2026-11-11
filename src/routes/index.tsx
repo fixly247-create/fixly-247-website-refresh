@@ -5,7 +5,7 @@ import illustrationAsset from "@/assets/customer-service-illustration.jpg.asset.
 import { FxLink } from "@/components/site/FxButton";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/SectionHeading";
-import { EXPERIENCES, SERVICES, STEPS } from "@/lib/site";
+import { SERVICES, STEPS } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -38,7 +38,6 @@ function HomePage() {
       <Intro />
       <ServicesPreview />
       <HowItWorks />
-      <ExperiencePreview />
       <FreeTrial />
     </>
   );
@@ -161,36 +160,6 @@ function HowItWorks() {
               <span className="step-label">Step {i + 1}</span>
               <h3 className="mt-4 text-xl font-bold text-on-dark">{step.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-on-dark-muted">{step.description}</p>
-            </RevealItem>
-          ))}
-        </RevealGroup>
-      </div>
-    </section>
-  );
-}
-
-function ExperiencePreview() {
-  return (
-    <section className="section">
-      <div className="container-site">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHeading eyebrow="Experience" title="Businesses we've supported" />
-          <Reveal>
-            <Link to="/experience" className="text-link">
-              See our experience <ArrowUpRight className="size-4" />
-            </Link>
-          </Reveal>
-        </div>
-        <RevealGroup className="mt-12 border-t border-border">
-          {EXPERIENCES.map((x) => (
-            <RevealItem key={x.company}>
-              <div className="grid gap-1 border-b border-border py-5 sm:grid-cols-[1.2fr_1fr] sm:items-center sm:gap-6">
-                <p className="text-lg font-bold">
-                  {x.company}
-                  {x.detail && <span className="font-medium text-muted-foreground"> — {x.detail}</span>}
-                </p>
-                <p className="text-sm font-semibold text-primary sm:text-right">{x.role}</p>
-              </div>
             </RevealItem>
           ))}
         </RevealGroup>

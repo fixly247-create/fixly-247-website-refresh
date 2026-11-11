@@ -16,6 +16,11 @@ const filled: Enquiry = {
 };
 
 describe("navigation", () => {
+  it("has no Our Experience link in the menu", () => {
+    expect(NAV_ITEMS.map((i) => i.to)).not.toContain("/experience");
+    expect(NAV_ITEMS.map((i) => i.label)).not.toContain("Our Experience");
+  });
+
   it("every nav link, including Why Choose Us, matches a real page", () => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
     for (const item of NAV_ITEMS) {
