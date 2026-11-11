@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import logoAsset from "@/assets/fixly247-logo.png.asset.json";
-import logoLightTextAsset from "@/assets/fixly247-logo-light-text.png.asset.json";
+import logoSrc from "@/assets/fixly247-logo.png";
+import logoLightTextSrc from "@/assets/fixly247-logo-light-text.png";
 import { cn } from "@/lib/utils";
 
 /**
@@ -31,7 +31,7 @@ export function Logo({
       className={cn("relative inline-flex shrink-0", className)}
     >
       <img
-        src={logoAsset.url}
+        src={logoSrc}
         alt="Fixly 247 Customer Support"
         width={826}
         height={316}
@@ -39,7 +39,7 @@ export function Logo({
         decoding="async"
       />
       <img
-        src={logoLightTextAsset.url}
+        src={logoLightTextSrc}
         alt=""
         aria-hidden="true"
         width={826}

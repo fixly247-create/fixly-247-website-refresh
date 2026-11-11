@@ -14,10 +14,10 @@ import {
   Ticket,
   type LucideIcon,
 } from "lucide-react";
-import clanLogo from "@/assets/clients/clan-group-logo.png.asset.json";
-import exitRealtyLogo from "@/assets/clients/exit-realty-prime-logo.png.asset.json";
-import installGuysLogo from "@/assets/clients/the-install-guys-logo.png.asset.json";
-import powerwingLogo from "@/assets/clients/powerwing-logo.png.asset.json";
+import clanLogo from "@/assets/clients/clan-group-logo.png";
+import exitRealtyLogo from "@/assets/clients/exit-realty-prime-logo.png";
+import installGuysLogo from "@/assets/clients/the-install-guys-logo.png";
+import powerwingLogo from "@/assets/clients/powerwing-logo.png";
 
 export const CONTACT = {
   phoneDisplay: "+923021001781",
@@ -35,10 +35,10 @@ export const SOCIAL_LINKS = {
 
 /** Client logos for the homepage "Our Clients" strip. `shape` balances wide vs. tall marks optically. */
 export const CLIENTS: { name: string; src: string; width: number; height: number; shape: "wide" | "tall" }[] = [
-  { name: "The Install Guys", src: installGuysLogo.url, width: 525, height: 351, shape: "tall" },
-  { name: "Powerwing", src: powerwingLogo.url, width: 470, height: 164, shape: "wide" },
-  { name: "EXIT Realty Prime", src: exitRealtyLogo.url, width: 596, height: 334, shape: "tall" },
-  { name: "CLAN Group of Companies", src: clanLogo.url, width: 534, height: 198, shape: "wide" },
+  { name: "The Install Guys", src: installGuysLogo, width: 525, height: 351, shape: "tall" },
+  { name: "Powerwing", src: powerwingLogo, width: 470, height: 164, shape: "wide" },
+  { name: "EXIT Realty Prime", src: exitRealtyLogo, width: 596, height: 334, shape: "tall" },
+  { name: "CLAN Group of Companies", src: clanLogo, width: 534, height: 198, shape: "wide" },
 ];
 
 export const NAV_ITEMS = [

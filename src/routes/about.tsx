@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import founderAsset from "@/assets/fixly247-founder.jpg.asset.json";
+import founderSrc from "@/assets/fixly247-founder.jpg";
 import { PageHero } from "@/components/site/PageHero";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/SectionHeading";
@@ -57,7 +57,7 @@ function AboutPage() {
           <Reveal className="mx-auto w-full max-w-md lg:max-w-none">
             <figure className="portrait">
               <img
-                src={founderAsset.url}
+                src={founderSrc}
                 alt="The person behind Fixly 247 at work"
                 className="aspect-[4/5] w-full object-cover object-[60%_center]"
                 width={1451}

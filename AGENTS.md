@@ -36,4 +36,5 @@ use the editor.
 - The logo is rendered only through `src/components/site/Logo.tsx`; `onDark` swaps to the light-lettering file derived from the same original artwork, so no placement ever needs a plate behind it.
 - The header is fixed and reads the tone of the section beneath it: full-width navy sections carry `data-header-tone="dark"`, and opening navy bands also use `hero-offset` so they sit under the header. Mark any new navy section the same way.
 - Promotional CTAs are deliberately sparse: no closing CTA band on pages; the free-trial call appears only in the header/mobile menu, the home hero and the home trial section.
+- Images are bundled files under `src/assets` imported directly (never `.asset.json` pointers or `/__l5e/` URLs) because the site is also deployed to Cloudflare, which cannot serve Lovable-hosted asset URLs; a test in `src/test/site-rules.test.ts` guards this.
 - Enquiry email building/validation lives in `src/lib/enquiry.ts`, covered by `src/test/site-rules.test.ts`.

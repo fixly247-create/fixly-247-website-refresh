@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import illustrationAsset from "@/assets/customer-service-illustration.jpg.asset.json";
+import illustrationSrc from "@/assets/customer-service-illustration.jpg";
 import { FxLink } from "@/components/site/FxButton";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/SectionHeading";
@@ -95,7 +95,7 @@ function Intro() {
       <div className="container-site grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
         <Reveal className="order-2 lg:order-1">
           <img
-            src={illustrationAsset.url}
+            src={illustrationSrc}
             alt="Customer service illustration: solution, friendly, positive, 24/7 support, knowledge and quality"
             className="mx-auto w-full max-w-xl"
             loading="lazy"

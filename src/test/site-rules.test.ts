@@ -57,3 +57,26 @@ describe("enquiry form", () => {
     expect(validateEnquiry(filled)).toEqual({});
   });
 });
+
+describe("images work on any host (e.g. Cloudflare)", () => {
+  const files = Object.entries(
+    import.meta.glob(["/src/**/*.{ts,tsx,css}", "!/src/test/**", "!/src/routeTree.gen.ts"], {
+      query: "?raw",
+      import: "default",
+      eager: true,
+    }) as Record<string, string>,
+  );
+
+  it("never loads images from Lovable-only asset addresses", () => {
+    const offenders = files
+      .filter(([, src]) => src.includes(".asset.json") || src.includes("/__l5e/"))
+      .map(([path]) => path);
+    expect(offenders).toEqual([]);
+  });
+
+  it("bundles all four client logos as real files", async () => {
+    const { CLIENTS } = await import("@/lib/site");
+    expect(CLIENTS).toHaveLength(4);
+    for (const c of CLIENTS) expect(c.src).not.toContain("__l5e");
+  });
+});
