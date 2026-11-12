@@ -20,15 +20,15 @@ import installGuysLogo from "@/assets/clients/the-install-guys-logo.png";
 import powerwingLogo from "@/assets/clients/powerwing-logo.png";
 
 export const CONTACT = {
-  phoneDisplay: "+923021001781",
-  phoneHref: "tel:+923021001781",
-  whatsappDisplay: "+923021001781",
+  phoneDisplay: "+1 315 300 7069",
+  phoneHref: "tel:+13153007069",
+  whatsappDisplay: "+1 510 585 4190",
   email: "fixly247@gmail.com",
   emailHref: "mailto:fixly247@gmail.com",
 } as const;
 
 export const SOCIAL_LINKS = {
-  whatsapp: "https://wa.me/923021001781",
+  whatsapp: "https://wa.me/15105854190",
   facebook: "https://www.facebook.com/share/1EiHZgT7M9/",
   instagram: "https://www.instagram.com/fixly247?xtok=MXFxczNwZjZteWJvZA==",
 } as const;

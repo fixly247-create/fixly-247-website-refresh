@@ -37,7 +37,7 @@ Add official Facebook and Instagram brand icons alongside WhatsApp wherever soci
 
 Make all three icons clickable and link them to the exact profiles below:
 
-WhatsApp: https://wa.me/923021001781
+WhatsApp: https://wa.me/15105854190
 
 Facebook: https://www.facebook.com/share/1EiHZgT7M9/
 

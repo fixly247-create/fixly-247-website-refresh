@@ -3,7 +3,7 @@ import { createRouter, rootRouteId } from "@tanstack/react-router";
 import { describe, expect, it } from "vitest";
 
 import { buildEnquiryMailto, validateEnquiry, type Enquiry } from "@/lib/enquiry";
-import { NAV_ITEMS, SOCIAL_LINKS } from "@/lib/site";
+import { CONTACT, NAV_ITEMS, SOCIAL_LINKS } from "@/lib/site";
 import { routeTree } from "@/routeTree.gen";
 
 const filled: Enquiry = {
@@ -32,9 +32,23 @@ describe("navigation", () => {
   });
 });
 
+describe("phone numbers", () => {
+  it("uses the US direct business line for calls", () => {
+    expect(CONTACT.phoneDisplay).toBe("+1 315 300 7069");
+    expect(CONTACT.phoneHref).toBe("tel:+13153007069");
+  });
+  it("uses the US WhatsApp number for WhatsApp", () => {
+    expect(CONTACT.whatsappDisplay).toBe("+1 510 585 4190");
+  });
+  it("contains no Pakistani numbers", () => {
+    const all = JSON.stringify({ CONTACT, SOCIAL_LINKS });
+    expect(all).not.toMatch(/\+?92\d{9,10}|3021001781/);
+  });
+});
+
 describe("social links", () => {
   it("point at the exact Fixly 247 profiles", () => {
-    expect(SOCIAL_LINKS.whatsapp).toBe("https://wa.me/923021001781");
+    expect(SOCIAL_LINKS.whatsapp).toBe("https://wa.me/15105854190");
     expect(SOCIAL_LINKS.facebook).toBe("https://www.facebook.com/share/1EiHZgT7M9/");
     expect(SOCIAL_LINKS.instagram).toBe("https://www.instagram.com/fixly247?xtok=MXFxczNwZjZteWJvZA==");
   });
