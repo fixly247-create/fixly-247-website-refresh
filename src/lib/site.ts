@@ -46,6 +46,7 @@ export const NAV_ITEMS = [
   { to: "/about", label: "About Us" },
   { to: "/services", label: "Services" },
   { to: "/why-choose-us", label: "Why Choose Us" },
+  { to: "/careers", label: "Careers" },
   { to: "/contact", label: "Contact Us" },
 ] as const;
 
