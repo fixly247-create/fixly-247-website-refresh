@@ -1,4 +1,4 @@
-export const ENQUIRY_RECIPIENT = "fixly247@gmail.com";
+export const ENQUIRY_RECIPIENT = "info@fixly247.site";
 export const ENQUIRY_SUBJECT = "New Business Enquiry — Fixly 247";
 
 export type Enquiry = {
@@ -47,4 +47,20 @@ export function buildEnquiryMailto(e: Enquiry): string {
   return `mailto:${ENQUIRY_RECIPIENT}?subject=${encodeURIComponent(
     ENQUIRY_SUBJECT,
   )}&body=${encodeURIComponent(buildEnquiryBody(e))}`;
+}
+
+export const FORMSPREE_ENDPOINT = "https://formspree.io/f/meaggjqw";
+
+/** Fields posted to Formspree; `_replyto` lets replies go to the customer. */
+export function buildFormspreePayload(e: Enquiry): Record<string, string> {
+  return {
+    name: e.fullName.trim(),
+    email: e.email.trim(),
+    _replyto: e.email.trim(),
+    phone: e.phone.trim(),
+    company: e.company.trim(),
+    services: e.services.join(", "),
+    message: e.message.trim(),
+    _subject: ENQUIRY_SUBJECT,
+  };
 }

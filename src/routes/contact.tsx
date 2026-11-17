@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Info, Mail, Phone, Send } from "lucide-react";
+import { Mail, Phone, Send } from "lucide-react";
 import { useState, type FormEvent, type ReactNode } from "react";
 import { WhatsAppIcon } from "@/components/site/BrandIcons";
 import { FxButton } from "@/components/site/FxButton";
@@ -7,8 +7,8 @@ import { PageHero } from "@/components/site/PageHero";
 import { Reveal } from "@/components/site/Reveal";
 import { SocialLinks } from "@/components/site/SocialLinks";
 import {
-  buildEnquiryMailto,
-  ENQUIRY_RECIPIENT,
+  buildFormspreePayload,
+  FORMSPREE_ENDPOINT,
   validateEnquiry,
   type Enquiry,
   type EnquiryErrors,
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Contact Fixly 247 by phone, WhatsApp or email at fixly247@gmail.com, or send a business enquiry to discuss your support needs.",
+          "Contact Fixly 247 by phone, WhatsApp or email at info@fixly247.site, or send a business enquiry to discuss your support needs.",
       },
       { property: "og:title", content: "Contact Fixly 247" },
       {
@@ -110,7 +110,7 @@ function ContactPage() {
 function EnquiryForm() {
   const [values, setValues] = useState<Enquiry>(EMPTY);
   const [errors, setErrors] = useState<EnquiryErrors>({});
-  const [status, setStatus] = useState<"idle" | "invalid" | "opened">("idle");
+  const [status, setStatus] = useState<"idle" | "invalid" | "sending" | "sent" | "error">("idle");
 
   const set = (key: keyof Enquiry) => (e: { target: { value: string } }) => {
     setValues((v) => ({ ...v, [key]: e.target.value }));
@@ -125,8 +125,9 @@ function EnquiryForm() {
     if (errors.services) setErrors((er) => ({ ...er, services: undefined }));
   };
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (status === "sending") return;
     const errs = validateEnquiry(values);
     setErrors(errs);
     if (Object.keys(errs).length > 0) {
@@ -135,31 +136,37 @@ function EnquiryForm() {
       document.getElementById(`f-${first}`)?.focus();
       return;
     }
-    window.location.href = buildEnquiryMailto(values);
-    setStatus("opened");
+    setStatus("sending");
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { Accept: "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify(buildFormspreePayload(values)),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setValues(EMPTY);
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
-    <form noValidate onSubmit={onSubmit} className="card-fx p-7 md:p-10" aria-describedby="form-note">
+    <form noValidate onSubmit={onSubmit} action={FORMSPREE_ENDPOINT} method="POST" className="card-fx p-7 md:p-10">
       <h2 className="text-2xl font-extrabold md:text-3xl">Send a business enquiry</h2>
-      <p id="form-note" className="mt-3 flex gap-2 text-sm text-muted-foreground">
-        <Info className="mt-0.5 size-4 shrink-0 text-primary" />
-        When you click Send Enquiry, your email app will open with your details filled in, ready
-        to send to {ENQUIRY_RECIPIENT}.
-      </p>
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
         <Field id="fullName" label="Full Name" required error={errors.fullName}>
-          <input id="f-fullName" className="field" autoComplete="name" value={values.fullName} onChange={set("fullName")} aria-invalid={!!errors.fullName} placeholder="Your full name" />
+          <input id="f-fullName" name="name" className="field" autoComplete="name" value={values.fullName} onChange={set("fullName")} aria-invalid={!!errors.fullName} placeholder="Your full name" />
         </Field>
         <Field id="email" label="Business Email" required error={errors.email}>
-          <input id="f-email" type="email" className="field" autoComplete="email" value={values.email} onChange={set("email")} aria-invalid={!!errors.email} placeholder="you@company.com" />
+          <input id="f-email" name="email" type="email" className="field" autoComplete="email" value={values.email} onChange={set("email")} aria-invalid={!!errors.email} placeholder="you@company.com" />
         </Field>
         <Field id="phone" label="Phone Number" error={errors.phone}>
-          <input id="f-phone" type="tel" className="field" autoComplete="tel" value={values.phone} onChange={set("phone")} aria-invalid={!!errors.phone} placeholder="+1 555 000 0000" />
+          <input id="f-phone" name="phone" type="tel" className="field" autoComplete="tel" value={values.phone} onChange={set("phone")} aria-invalid={!!errors.phone} placeholder="+1 555 000 0000" />
         </Field>
         <Field id="company" label="Company Name">
-          <input id="f-company" className="field" autoComplete="organization" value={values.company} onChange={set("company")} placeholder="Your company" />
+          <input id="f-company" name="company" className="field" autoComplete="organization" value={values.company} onChange={set("company")} placeholder="Your company" />
         </Field>
       </div>
 
@@ -173,6 +180,8 @@ function EnquiryForm() {
               <input
                 type="checkbox"
                 className="sr-only"
+                name="services"
+                value={name}
                 checked={values.services.includes(name)}
                 onChange={() => toggleService(name)}
               />
@@ -185,13 +194,13 @@ function EnquiryForm() {
 
       <div className="mt-6">
         <Field id="message" label="Message" required error={errors.message}>
-          <textarea id="f-message" rows={5} className="field resize-y" value={values.message} onChange={set("message")} aria-invalid={!!errors.message} placeholder="Tell us about your business and where you need support." />
+          <textarea id="f-message" name="message" rows={5} className="field resize-y" value={values.message} onChange={set("message")} aria-invalid={!!errors.message} placeholder="Tell us about your business and where you need support." />
         </Field>
       </div>
 
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <FxButton type="submit" variant="teal" icon={<Send />}>
-          Send Enquiry
+        <FxButton type="submit" variant="teal" icon={<Send />} disabled={status === "sending"}>
+          {status === "sending" ? "Sending…" : "Send Enquiry"}
         </FxButton>
         <p className="text-xs text-muted-foreground">
           <span className="text-destructive">*</span> Required fields
@@ -204,14 +213,15 @@ function EnquiryForm() {
             Please fill in the required fields highlighted above.
           </p>
         )}
-        {status === "opened" && (
+        {status === "sent" && (
           <p className="rounded-xl border border-primary/30 bg-accent p-4 text-sm text-accent-foreground">
-            Your email app should now be open with your enquiry ready — just press send. If nothing
-            opened, email us directly at{" "}
-            <a className="font-bold underline" href={CONTACT.emailHref}>
-              {CONTACT.email}
-            </a>
-            .
+            Thank you! Your inquiry has been received. Our team will contact you shortly.
+          </p>
+        )}
+        {status === "error" && (
+          <p className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm font-semibold text-destructive">
+            Sorry, your enquiry couldn't be sent. Please try again, or email us at{" "}
+            <a className="underline" href={CONTACT.emailHref}>{CONTACT.email}</a>.
           </p>
         )}
       </div>

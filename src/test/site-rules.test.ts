@@ -55,9 +55,9 @@ describe("social links", () => {
 });
 
 describe("enquiry form", () => {
-  it("sends to fixly247@gmail.com with the required subject", () => {
+  it("sends to info@fixly247.site with the required subject", () => {
     const url = buildEnquiryMailto(filled);
-    expect(url.startsWith("mailto:fixly247@gmail.com?")).toBe(true);
+    expect(url.startsWith("mailto:info@fixly247.site?")).toBe(true);
     const params = new URLSearchParams(url.split("?")[1]);
     expect(params.get("subject")).toBe("New Business Enquiry — Fixly 247");
     expect(params.get("body")).toContain("Full Name: Jane Doe");
@@ -92,5 +92,18 @@ describe("images work on any host (e.g. Cloudflare)", () => {
     const { CLIENTS } = await import("@/lib/site");
     expect(CLIENTS).toHaveLength(4);
     for (const c of CLIENTS) expect(c.src).not.toContain("__l5e");
+  });
+});
+
+describe("formspree enquiry", () => {
+  it("posts to the Formspree form with reply-to set to the customer", async () => {
+    const { FORMSPREE_ENDPOINT, buildFormspreePayload } = await import("@/lib/enquiry");
+    expect(FORMSPREE_ENDPOINT).toBe("https://formspree.io/f/meaggjqw");
+    const p = buildFormspreePayload(filled);
+    expect(p["_replyto"]).toBe("jane@acme.com");
+    expect(p["services"]).toBe("Email Support");
+  });
+  it("uses info@fixly247.site as the business email", () => {
+    expect(CONTACT.emailHref).toBe("mailto:info@fixly247.site");
   });
 });

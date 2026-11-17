@@ -57,6 +57,7 @@ export function FxButton({
   className,
   block,
   type = "button",
+  disabled,
 }: {
   children: ReactNode;
   variant?: FxVariant;
@@ -65,9 +66,10 @@ export function FxButton({
   className?: string;
   block?: boolean;
   type?: "button" | "submit";
+  disabled?: boolean;
 }) {
   return (
-    <button type={type} className={cn(classesFor(variant, size, block), className)}>
+    <button type={type} disabled={disabled} aria-busy={disabled || undefined} className={cn(classesFor(variant, size, block), className)}>
       <Inner icon={icon}>{children}</Inner>
     </button>
   );

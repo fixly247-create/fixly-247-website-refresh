@@ -23,8 +23,8 @@ export const CONTACT = {
   phoneDisplay: "+1 315 300 7069",
   phoneHref: "tel:+13153007069",
   whatsappDisplay: "+1 510 585 4190",
-  email: "fixly247@gmail.com",
-  emailHref: "mailto:fixly247@gmail.com",
+  email: "info@fixly247.site",
+  emailHref: "mailto:info@fixly247.site",
 } as const;
 
 export const SOCIAL_LINKS = {

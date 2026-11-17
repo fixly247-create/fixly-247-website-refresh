@@ -49,7 +49,7 @@ export function SiteFooter() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-on-dark-muted transition-colors hover:text-on-dark"
               >
-                <WhatsAppIcon className="size-4 text-whatsapp" /> WhatsApp {CONTACT.whatsappDisplay}
+                <WhatsAppIcon className="size-4 text-whatsapp" /> {CONTACT.whatsappDisplay}
               </a>
             </li>
             <li>
