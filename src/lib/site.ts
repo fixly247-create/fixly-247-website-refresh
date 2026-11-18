@@ -18,6 +18,7 @@ import clanLogo from "@/assets/clients/clan-group-logo.png";
 import exitRealtyLogo from "@/assets/clients/exit-realty-prime-logo.png";
 import installGuysLogo from "@/assets/clients/the-install-guys-logo.png";
 import powerwingLogo from "@/assets/clients/powerwing-logo.png";
+import communicaLogo from "@/assets/clients/communica-logo.png";
 
 export const CONTACT = {
   phoneDisplay: "+1 315 300 7069",
@@ -39,6 +40,7 @@ export const CLIENTS: { name: string; src: string; width: number; height: number
   { name: "Powerwing", src: powerwingLogo, width: 470, height: 164, shape: "wide" },
   { name: "EXIT Realty Prime", src: exitRealtyLogo, width: 596, height: 334, shape: "tall" },
   { name: "CLAN Group of Companies", src: clanLogo, width: 534, height: 198, shape: "wide" },
+  { name: "Communica", src: communicaLogo, width: 241, height: 187, shape: "tall" },
 ];
 
 export const NAV_ITEMS = [

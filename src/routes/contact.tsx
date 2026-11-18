@@ -37,7 +37,7 @@ export const Route = createFileRoute("/contact")({
 });
 
 const EMPTY: Enquiry = { fullName: "", email: "", phone: "", company: "", services: [], message: "" };
-const SERVICE_OPTIONS = [...SERVICES.map((s) => s.title), "Not sure yet"];
+const SERVICE_OPTIONS = [...SERVICES.map((s) => s.title).filter((t) => t !== "Call Handling"), "Not sure yet"];
 
 function ContactPage() {
   return (
@@ -159,7 +159,7 @@ function EnquiryForm() {
         <Field id="fullName" label="Full Name" required error={errors.fullName}>
           <input id="f-fullName" name="name" className="field" autoComplete="name" value={values.fullName} onChange={set("fullName")} aria-invalid={!!errors.fullName} placeholder="Your full name" />
         </Field>
-        <Field id="email" label="Business Email" required error={errors.email}>
+        <Field id="email" label="Email" required error={errors.email}>
           <input id="f-email" name="email" type="email" className="field" autoComplete="email" value={values.email} onChange={set("email")} aria-invalid={!!errors.email} placeholder="you@company.com" />
         </Field>
         <Field id="phone" label="Phone Number" error={errors.phone}>

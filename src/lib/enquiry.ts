@@ -33,7 +33,7 @@ export function buildEnquiryBody(e: Enquiry): string {
     "New business enquiry from the Fixly 247 website",
     "",
     `Full Name: ${v(e.fullName)}`,
-    `Business Email: ${v(e.email)}`,
+    `Email: ${v(e.email)}`,
     `Phone Number: ${v(e.phone)}`,
     `Company Name: ${v(e.company)}`,
     `Services Required: ${e.services.length ? e.services.join(", ") : "Not provided"}`,

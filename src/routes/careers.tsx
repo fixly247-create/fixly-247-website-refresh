@@ -40,7 +40,7 @@ function CareersPage() {
   return (
     <>
       <PageHero eyebrow="Careers" title={<>Build your career <span className="display-accent">with Fixly 247</span></>}>
-        <p>Remote opportunities for people with good communication skills, a professional attitude and a willingness to learn.</p>
+        <p>Explore remote customer support and calling roles, and apply online in a few minutes.</p>
       </PageHero>
 
       <section className="section">
@@ -52,6 +52,9 @@ function CareersPage() {
           <Reveal delay={0.1}>
             <h2 className="text-2xl font-extrabold md:text-3xl">About the Opportunities</h2>
             <p className="mt-4 text-muted-foreground">We offer remote work opportunities for individuals with good communication skills, a professional attitude, and a willingness to learn. Join our team and help businesses deliver better customer experiences.</p>
+          </Reveal>
+          <Reveal delay={0.15} className="md:col-span-2">
+            <p className="rounded-2xl border border-border bg-accent p-5 text-accent-foreground"><strong>Competitive Salary Packages</strong> – We offer competitive compensation based on experience, skills, and role responsibilities.</p>
           </Reveal>
         </div>
       </section>

@@ -90,7 +90,7 @@ describe("images work on any host (e.g. Cloudflare)", () => {
 
   it("bundles all four client logos as real files", async () => {
     const { CLIENTS } = await import("@/lib/site");
-    expect(CLIENTS).toHaveLength(4);
+    expect(CLIENTS).toHaveLength(5);
     for (const c of CLIENTS) expect(c.src).not.toContain("__l5e");
   });
 });

@@ -1,21 +1,30 @@
+export const REQUIREMENTS = [
+  "Minimum 1 year of relevant experience in sales.",
+  "High school diploma or equivalent qualification.",
+  "Good, confident, and fluent English-speaking skills.",
+  "Strong verbal communication and professional customer interaction skills.",
+  "Experience with Customer Relationship Management (CRM) software for streamlined customer interactions.",
+  "Strong problem-solving skills with the ability to think on your feet.",
+];
+
 export const POSITIONS = [
   {
     title: "Phone Support Representative",
     about: "Handle customer calls, answer inquiries, resolve concerns, and provide helpful support through professional phone communication.",
     responsibilities: ["Handle inbound and outbound customer calls.", "Respond to customer questions and concerns.", "Provide appropriate solutions and follow up when needed.", "Maintain clear records of customer interactions."],
-    requirements: ["Good spoken English and communication skills.", "Confidence and active listening.", "Customer handling and problem solving abilities.", "Reliable internet connection and a quiet working environment."],
+    requirements: REQUIREMENTS,
   },
   {
     title: "Email Support Representative",
     about: "Manage customer inquiries through email and provide clear, helpful, and professional responses while ensuring customer issues are handled properly.",
     responsibilities: ["Respond to customer emails professionally.", "Handle inquiries, complaints, and support requests.", "Follow up on unresolved issues.", "Maintain accurate records of customer communication."],
-    requirements: ["Strong written English.", "Good grammar and attention to detail.", "Professional writing and problem solving skills.", "Ability to manage multiple inquiries efficiently."],
+    requirements: REQUIREMENTS,
   },
   {
     title: "Cold Caller",
     about: "Contact potential customers, introduce business services, generate interest, and identify opportunities for further discussions or appointments.",
     responsibilities: ["Make outbound calls to potential customers.", "Introduce services and explain their benefits.", "Follow calling scripts and handle objections.", "Identify interested prospects and arrange follow ups."],
-    requirements: ["Good spoken English and a confident speaking style.", "Persuasion and communication skills.", "Ability to handle objections professionally.", "Comfortable making outbound calls and meeting targets."],
+    requirements: REQUIREMENTS,
   },
 ] as const;
 

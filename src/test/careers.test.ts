@@ -15,3 +15,11 @@ describe("careers rules", () => {
   });
   it("requires privacy consent", () => expect(validateApplication({ ...ok, privacy_consent: false }, pdf).privacy_consent).toBeTruthy());
 });
+
+import { POSITIONS, REQUIREMENTS } from "@/lib/careers";
+describe("shared requirements", () => {
+  it("every position lists all six requirements", () => {
+    expect(REQUIREMENTS).toHaveLength(6);
+    for (const p of POSITIONS) expect(p.requirements).toEqual(REQUIREMENTS);
+  });
+});
