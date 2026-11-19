@@ -40,7 +40,7 @@ export type Application = {
   experience: string; skills: string; english_speaking_level: string; availability: string;
   linkedin: string; portfolio: string; expected_salary: string; voice_note_url: string; privacy_consent: boolean;
 };
-export type ApplicationErrors = Partial<Record<keyof Application | "resume", string>>;
+export type ApplicationErrors = Partial<Record<keyof Application | "resume", string | undefined>>;
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function isUrl(v: string) {
